@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        .chat-messages {
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center">
+    <div class="bg-white shadow-lg rounded-lg w-full max-w-md h-full flex flex-col">
+        <div class="bg-blue-500 text-white p-4 rounded-t-lg">
+            <h1 class="text-lg font-semibold">Messaging App</h1>
+            <p class="text-sm">Chat with friends</p>
+        </div>
+        <div class="chat-messages flex-1 p-4 space-y-4">
+            <div class="message received">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex-shrink-0">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2ef4afa6-23d8-4310-b33d-fe938b678ad8.png" alt="Rounded avatar icon of a person with a friendly smile, blue background, realistic style" class="w-full h-full rounded-full" />
+                    </div>
+                    <div class="bg-gray-300 text-gray-800 py-2 px-3 rounded-lg max-w-xs">
+                        <p>Hello! How are you?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="message sent">
+                <div class="flex items-center justify-end space-x-2">
+                    <div class="bg-blue-500 text-white py-2 px-3 rounded-lg max-w-xs">
+                        <p>I'm good, thanks! What's up?</p>
+                    </div>
+                    <div class="w-8 h-8 bg-green-500 rounded-full flex-shrink-0">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/be5d09f4-28c1-495b-b047-26b793aba13c.png" alt="Rounded avatar icon of a person with a cheerful expression, green background, cartoon style" class="w-full h-full rounded-full" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-200 flex space-x-2">
+            <input id="message-input" type="text" placeholder="Type a message..." class="flex-1 border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500" />
+            <button id="send-button" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition duration-200">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const messagesContainer = document.querySelector('.chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+
+        function addMessage(content, isSent) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+
+            const flexDiv = document.createElement('div');
+            flexDiv.className = `flex items-center ${isSent ? 'justify-end space-x-2' : 'space-x-2'}`;
+
+            if (!isSent) {
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'w-8 h-8 bg-blue-500 rounded-full flex-shrink-0';
+                const img = document.createElement('img');
+                img.src = 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9e09ca40-45ac-437f-a037-12655832a9a9.png';
+                img.alt = 'Rounded avatar icon of a person with a friendly smile, blue background, realistic style';
+                img.className = 'w-full h-full rounded-full';
+                avatarDiv.appendChild(img);
+                flexDiv.appendChild(avatarDiv);
+            }
+
+            const textDiv = document.createElement('div');
+            textDiv.className = `${isSent ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'} py-2 px-3 rounded-lg max-w-xs`;
+            const p = document.createElement('p');
+            p.textContent = content;
+            textDiv.appendChild(p);
+
+            flexDiv.appendChild(textDiv);
+
+            if (isSent) {
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'w-8 h-8 bg-green-500 rounded-full flex-shrink-0';
+                const img = document.createElement('img');
+                img.src = 'https://placehold.co/32x32';
+                img.alt = 'Rounded avatar icon of a person with a cheerful expression, green background, cartoon style';
+                img.className = 'w-full h-full rounded-full';
+                avatarDiv.appendChild(img);
+                flexDiv.appendChild(avatarDiv);
+            }
+
+            messageDiv.appendChild(flexDiv);
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                messageInput.value = '';
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
+</content>
+</create_file>
